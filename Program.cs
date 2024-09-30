@@ -1,12 +1,17 @@
+using FirstCrud.Data;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.EntityFrameworkCore.Design;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+var connectionString = builder.Configuration.GetConnectionString("ProductContext");
+builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(connectionString));
 
-builder.services.AddDbContext<ProductContext>(options =>
-    options.UseInMemoryDatabase("ProductList"));
+var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
