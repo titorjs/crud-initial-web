@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using FirstCrud.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
@@ -10,6 +11,15 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("ProductContext");
 builder.Services.AddDbContext<ProductContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";  // Ruta de la página de login
+        options.AccessDeniedPath = "/Account/AccessDenied";  // Ruta de la página de acceso denegado
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

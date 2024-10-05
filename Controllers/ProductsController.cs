@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FirstCrud.Data;
 using FirstCrud.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FirstCrud.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly ProductContext _context;
